@@ -1,0 +1,82 @@
+Bài 1:
+const student = {
+  name: 'hoang',
+  parent: {
+    name: 'bo hoang'
+  }
+}
+const mentor = { ...student }
+mentor.name = 'bang'
+mentor.parent.name = 'bo bang'
+console.log(student)
+console.log(mentor)
+--- PHẦN TRẢ LỜI:
+1. student.name có bị đổi không?
+-> Không bị đổi giá trị. Vì student.name và mentor.name là 2 ô địa chỉ nhớ riêng biệt
+2. student.parent.name có bị đổi không?
+-> Có thay đổi giá trị. Vì student.parent.name và mentor.parent.name là cùng tham chiếu
+đến 1 ô địa chỉ. Và bởi vì do khi gán giá trị thì mentor.parent = student.parent ("student.parent"
+đây là object nên mentor.parent được gán cho vị trí địa chỉ chứ không phải giá trị)
+3. Giải thích vì sao?
+-> Dạ em giải thích luôn ở trên
+
+---------------------------------------------
+Bài 2
+const student = {
+  name: 'hoang',
+  parent: {
+    name: 'bo hoang'
+  }
+}
+const mentor = JSON.parse(JSON.stringify(student))
+mentor.parent.name = 'bo bang'
+console.log(student)
+console.log(mentor)
+--- PHẦN TRẢ LỜI:
+1. student.parent.name có bị ảnh hưởng không?
+-> Không bị ảnh hưởng
+2.Vì sao cách này khác spread (const mentor = { ...student })
+-> Mặc dù nếu nhìn vào 2 cách này cũng có thể nghĩ đây đều là kỹ thuật deep copy. Nhưng có lẽ dùng
+json có thể là sâu hơn.
+    *JSON
+    1. Json dùng kỹ thuật biến object thành 1 string
+    2. Sau đó dùng parse biến string đó thành 1 object mới cho nên sẽ khởi tạo nhiều vùng nhớ mới riêng
+    biệt giống nguyên giá trị tham chiếu
+    *spead
+    1. Cũng sẽ tạo vùng mới. Nhưng các thuộc tính bên object tham chiếu chỉ có gán với giá trị thì sẽ không bị
+    tham chiếu.
+    2. Nếu oject tham chiếu có thuộc tính bị gán oject khác thì thuộc tính đó bị gán vị trí object con nên chắc
+    chắn sẽ bị tham chiếu
+---------------------------------------------
+Bài 3
+const students = [
+  { name: 'a' },
+  { name: 'b' }
+]
+const newStudents = [...students]
+newStudents[0].name = 'z'
+console.log(students)
+console.log(newStudents)
+--- PHẦN TRẢ LỜI:
+1. Mảng có bị thay đổi không?
+-> Có
+2. Phần tử bên trong có bị không?
+-> Có
+---------------------------------------------
+Bài 4:
+const user = {
+  name: 'hoang',
+  address: {
+    city: 'HN',
+    location: {
+      lat: 123
+    }
+  }
+}
+const newUser = { ...user }
+newUser.address.location.lat = 999
+console.log(user.address.location.lat)
+--- PHẦN TRẢ LỜI:
+Câu hỏi: Kết quả là bao nhiêu? Vì sao?
+-> Kết quả: 999. Vì cùng 1 ô địa chỉ tham chiếu. Nếu dùng kỹ thuật "spead" thì dù lồng bao nhiêu cấp nếu
+ thuộc tính có object con thì chắc chắn sẽ bị tham chiếu
