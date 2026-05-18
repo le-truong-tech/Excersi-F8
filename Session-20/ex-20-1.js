@@ -64,3 +64,17 @@ function quickSort(arr, left, right){
 
 let leng = uniqueIDClassAB.length;
 console.log(quickSort(uniqueIDClassAB, 0, leng-1));
+// ----------------------------------------------
+// function quickSort(arr){
+//     if(arr.length <= 1) return arr ;
+//     const leng = arr.length;
+//     let pivot = arr[leng-1];
+//     let arrLeft=[];
+//     let arrRight=[];
+//     for(let i = 0; i < leng-1; i++){
+//         let value = arr[i];
+//         if(value < pivot) arrLeft.push(value);
+//         else arrRight.push(value);
+//     }
+//     return [...quickSort(arrLeft), pivot, ...quickSort(arrRight)];// }
+// console.log(quickSort(uniqueIDClassAB));
