@@ -1,0 +1,137 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    color: #7b7f80;
+    line-height: 1.8rem;
+}
+
+.invoice-container {
+    width: 60rem;
+    padding: 1rem 2.5rem;
+}
+
+.header {
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 1.5rem;
+    border-bottom: 0.1rem solid gainsboro;
+    margin: 2rem 0;
+}
+
+.name-shop, .code-label, .fullname, .total-label {
+    font-weight: bold;
+    color: #000;
+}
+
+.shop-brand {
+    display: inline-block;
+    width: 60%;
+}
+
+.details-bill {
+    width: 30%;
+    display: inline-block;
+    text-align: right;
+}
+
+.retail-invoice {
+    display: inline-block;
+    text-align: center;
+    font-size: 1rem;
+    color: #2c7868;
+    background: #ebfdf5;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.code-label, .code {
+    display: inline-block;
+}
+
+.partners {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    margin: 2rem 0;
+
+}
+
+.details-seller, .details-buyer {
+    display: inline-block;
+    width: 50%;
+}
+
+.seller, .buyer {
+    padding-bottom: 0.5rem;
+    border-bottom: 0.1rem solid gainsboro;
+    margin: 1rem 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 2rem 0;
+}
+
+tr {
+    border-bottom: 0.1rem solid gainsboro;
+}
+
+th, td {
+    padding: 1.5rem 0.5rem;
+}
+
+tr th:nth-child(2) {
+    width: 14rem;
+    text-align: left;
+}
+
+tr td:first-child, tr td:nth-child(3), tr td:nth-child(4) {
+    text-align: center;
+}
+
+tr td:nth-child(2), tr td:nth-child(4), tr td:nth-child(6) {
+    font-weight: bold;
+    color: black;
+}
+
+.footer {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.promotion {
+    width: 65%;
+    background: #ebfdf5;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+}
+
+.promotion-label {
+    font-weight: bold;
+    color: #2c7868;
+}
+
+.summary {
+    width: 35%;
+}
+
+.summary-list {
+    border-bottom: 0.1rem solid gainsboro;
+}
+
+.discount, .total-label {
+    color: #2c7868;
+}
+
+.total-amount {
+    margin-left: 1rem;
+}
