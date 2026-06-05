@@ -92,9 +92,23 @@ async function onClick (category, products) {
 const renderCategories = async (categories, products) => {
     const sidebarEl = document.querySelector('.sidebar');
     const categoriesEl = document.createElement('ul');
+
+    renderProductsList(products);
+    const categoryAllProductsEl = document.querySelector('.all-products');
+    categoryAllProductsEl.classList.add('active');
+    categoryAllProductsEl.addEventListener('click', () => {
+        const currentActive= document.querySelector('.sidebar ul li.active');
+        if (currentActive) currentActive.classList.remove('active');
+        categoryAllProductsEl.classList.add('active');
+        onClick('all', products
+        )});
+
     categories.forEach(c => {
         const categoryEl = document.createElement('li');
         categoryEl.addEventListener('click', () => {
+            const currentActive= document.querySelector('.sidebar ul li.active');
+            if (currentActive) currentActive.classList.remove('active');
+            categoryEl.classList.add('active')
             onClick(c, products);
         });
         categoryEl.innerText = `${c}`
@@ -102,11 +116,6 @@ const renderCategories = async (categories, products) => {
 
     });
     sidebarEl.append(categoriesEl);
-}
-const getAllProduct = (products) => {
-    renderProductsList(products);
-    const categoryAllProductsEl = document.querySelector('.all-products');
-    categoryAllProductsEl.addEventListener('click', () => {onClick('all', products)});
 }
 
 function addCar() {
@@ -138,8 +147,6 @@ const clickProductCardButton = () => {
 
 const init = async () => {
     const products = await getProducts();
-
-    getAllProduct(products);
 
     let categories = Array.from(new Set(products.map(p => p.category)));
     await renderCategories(categories, products);

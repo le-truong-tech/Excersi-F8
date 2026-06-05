@@ -64,8 +64,8 @@ html {
 
 .container {
     display: flex;
-    height: 100vh;
-    background: gainsboro;
+    min-height: 100vh;
+    background: #f4f6f8;
     margin: 0 1rem;
     border-top: 0.1rem solid gainsboro;
 }
@@ -82,6 +82,7 @@ html {
     padding: 2rem;
     margin: 2rem;
     border-radius: 0.8rem;
+    align-self: flex-start;
 }
 
 .products-list {
@@ -133,7 +134,7 @@ html {
 }
 
 .product-card__footer {
-    /*margin-top: auto;*/
+    margin-top: auto;
     display: flex;
     justify-content: space-between;
     padding: 1rem 0;
@@ -177,7 +178,7 @@ html {
     border-radius: 1rem;
     margin: 0.5rem;
 }
-.container > .sidebar > ul > li:hover {
+.container > .sidebar > ul > li:hover, .container > .sidebar > ul > li.active{
     background-color: lightblue;
     color: blueviolet;
     font-weight: bold;
