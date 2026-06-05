@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+<script>
+    const getProducts = async () => {
+        const res = await fetch("https://fakestoreapi.com/products");
+        const data = await res.json();
+        return data
+    }
+    console.log(getProducts());
+</script>
+</html>
