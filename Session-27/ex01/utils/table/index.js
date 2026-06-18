@@ -1,4 +1,4 @@
-import {renderDialog} from "../dialog";
+import {renderDialog} from "../dialog/index.js";
 
 const renderTable = (headers, rows, className = null) => {
   const div = document.createElement('div')
@@ -32,12 +32,13 @@ const renderTable = (headers, rows, className = null) => {
 
     const action = document.createElement('td')
     action.innerHTML = `
-      <label for="popup-toggle" class="action-icon" title="Edit">✎</label>
+      <label for="popup-toggle" class="action-icon edit" title="Edit">✎</label>
       <span class="action-icon delete" title="Delete">🗑</span>
     `
-    const popup = document.querySelector('.action-icon')
+    const popup = action.querySelector('.edit')
     popup.addEventListener('click', () => {
-      renderDialog(headers, row, true)
+      const dialog = renderDialog(headers, row, true)
+      document.body.append(dialog)
     });
     action.classList = 'actions'
 

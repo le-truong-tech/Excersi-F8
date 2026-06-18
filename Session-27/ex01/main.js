@@ -1,4 +1,5 @@
-import {renderTable, headers} from './utils'
+import {renderTable, headers} from './utils/index.js'
+import {renderDialog} from "./utils/dialog/index.js";
 
 const getCustomers = async () => {
   try {
@@ -15,6 +16,12 @@ const init = async () => {
 
   const panel = document.querySelector('.panel')
   panel.append(renderTable(headers, customers))
+
+  const btnAdd = document.querySelector('.btn-add')
+  btnAdd.addEventListener('click', () => {
+    const dialog = renderDialog(headers,{}, false)
+    document.body.append(dialog)
+  })
 }
 
 init()
