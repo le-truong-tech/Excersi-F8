@@ -182,6 +182,16 @@ html {
     background-color: lightblue;
     color: blueviolet;
     font-weight: bold;
+    position: relative;
+}
+
+.container > .sidebar > ul > li > div {
+    position: absolute;
+    /*background-color: #f4f6f8;*/
+    padding: 0.2rem 0.4rem;
+    border-radius: 2rem;
+    top: 8px;
+    right: 3px;
 }
 .content-header {
     margin-bottom: 1rem;

@@ -103,18 +103,22 @@ const renderCategories = async (categories, products) => {
         onClick('all', products
         )});
 
-    categories.forEach(c => {
+    for (let [key, value] of Object.entries(categories)){
         const categoryEl = document.createElement('li');
+        const quantityCategoryEl = document.createElement('div');
+
+        quantityCategoryEl.innerText = `${value}`;
+        categoryEl.innerText = `${key}`;
+        categoryEl.append(quantityCategoryEl);
+        categoriesEl.append(categoryEl);
+
         categoryEl.addEventListener('click', () => {
             const currentActive= document.querySelector('.sidebar ul li.active');
             if (currentActive) currentActive.classList.remove('active');
             categoryEl.classList.add('active')
-            onClick(c, products);
+            onClick(key, products);
         });
-        categoryEl.innerText = `${c}`
-        categoriesEl.append(categoryEl);
-
-    });
+    }
     sidebarEl.append(categoriesEl);
 }
 
@@ -148,7 +152,14 @@ const clickProductCardButton = () => {
 const init = async () => {
     const products = await getProducts();
 
-    let categories = Array.from(new Set(products.map(p => p.category)));
+    // let categories = Array.from(new Set(products.map(p => p.category)));
+    let categories = products.reduce((acc, curr) => {
+        const address= curr.category;
+        if (acc[address]) acc[address]++;
+        else acc[address] = 1;
+        return acc;
+    }, {});
+
     await renderCategories(categories, products);
 }
 init();
