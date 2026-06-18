@@ -1,5 +1,58 @@
 import {renderDialog} from "../dialog/index.js";
-
+import {headers} from "../const/customer.js";
+const API_URL = 'http://localhost:3000/customers'
+const getTable = async () => {
+  try {
+    const response = await fetch(API_URL)
+    return await response.json()
+  } catch {
+    alert('get data failed')
+  }
+}
+const deleteRow = async (id) => {
+  console.log(id, '1');
+  try {
+    await fetch(API_URL+`/${id}`, {
+      method : 'DELETE'
+    })
+    return true;
+  } catch {
+    return false;
+  }
+}
+const editRow = async (id, data) => {
+  try {
+    await fetch(API_URL+`/${id}`,{
+      method: 'PATCH',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    })
+    return true
+  } catch {
+    return false
+  }
+}
+const addRow = async (data) => {
+  try {
+    await fetch(API_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(data)
+    })
+    return true
+  } catch {
+    return false
+  }
+}
+const reloadTable = async () => {
+  const table = await getTable()
+  const panel = document.querySelector('.panel')
+  document.querySelector('.table-container').remove()
+  const tableContainer = document.createElement('div')
+  tableContainer.setAttribute('class', 'table-container')
+  tableContainer.append(renderTable(headers, table))
+  panel.append(tableContainer)
+}
 const renderTable = (headers, rows, className = null) => {
   const div = document.createElement('div')
 
@@ -40,6 +93,18 @@ const renderTable = (headers, rows, className = null) => {
       const dialog = renderDialog(headers, row, true)
       document.body.append(dialog)
     });
+
+    const deleteRowEl = action.querySelector('.delete')
+    deleteRowEl.addEventListener('click', async () => {
+      if(confirm('Do you can delete')) {
+        const res = await deleteRow(row.id);
+        if (res) {
+          alert('Delete success')
+          await reloadTable()
+        }
+        else  alert('Delete fail')
+      }
+    })
     action.classList = 'actions'
 
     tr.append(action)
@@ -55,5 +120,5 @@ const renderTable = (headers, rows, className = null) => {
 }
 
 export {
-  renderTable
+  renderTable, getTable, deleteRow, editRow, reloadTable, addRow
 }

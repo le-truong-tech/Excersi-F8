@@ -1,4 +1,5 @@
 import { headers } from "../const/customer.js"
+import {addRow, deleteRow, editRow, getTable, reloadTable, renderTable} from "../table/index.js"
 
 const renderDialog = (headers, data, isEdit) => {
   /*
@@ -48,7 +49,7 @@ const renderDialog = (headers, data, isEdit) => {
 
     if (isEdit) input.value = `${data[headers[row].key]}`
     else {
-      if (headers[row].key === 'companyName') input.setAttribute('placeholder', 'tên công ty')
+      if (headers[row].key === 'companyName') input.setAttribute('placeholder', 'company name')
       else if(headers[row].key === 'email') input.setAttribute('placeholder', 'abcx@example.com')
       else if(headers[row].key === 'phone') input.setAttribute('placeholder', '0912254856')
       else if(headers[row].key === 'address') input.setAttribute('placeholder', 'Que Son Trung, Da Nang')
@@ -77,9 +78,35 @@ const renderDialog = (headers, data, isEdit) => {
 
   labelCancel.addEventListener('click', () => {
     overlay.remove()
+    const checkbox = document.querySelector('#popup-toggle')
+    checkbox.checked = false;
   })
-  btnSave.addEventListener('click', () => {
+  btnSave.addEventListener('click', async () => {
+    let input = popupBody.getElementsByClassName('form-input')
+    const dataPopup = {};
+    let index = 1;
+    for (const value of input){
+      dataPopup[headers[index].key] = value.value;
+      index++;
+    }
+    if (isEdit) {
+      const res = await editRow(data.id, dataPopup)
+      if (res) {
+        alert('Edit success')
+        await reloadTable()
+      }
+      else  alert('Edit fail')
+    } else {
+      const res = await addRow(dataPopup)
+      if (res) {
+        alert('Add success')
+        await reloadTable()
+      }
+      else  alert('Add fail')
+    }
     overlay.remove()
+    const checkbox = document.querySelector('#popup-toggle')
+    checkbox.checked = false;
   })
 
   popupFooter.append(labelCancel)
