@@ -28,7 +28,6 @@ const onLogin = async () => {
 }
 const getAccessToken = async () => {
     try {
-        console.log('vao get tokent')
         const res = await fetch(API_URL+'/refresh',{
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -37,7 +36,7 @@ const getAccessToken = async () => {
             })
         })
         const data = await res.json()
-        if (data.message === 'Refresh token required') window.location.href='./login/index.html'
+        if (!data.accessToken) window.location.href='./login/index.html'
         else {
             localStorage.setItem('accessToken', data.accessToken)
             return await getUser()
@@ -50,7 +49,6 @@ const getAccessToken = async () => {
 }
 const getUser = async () => {
     try {
-        console.log('vao get user')
         const res = await fetch(API_URL+'/me', {
             method: 'GET',
             headers: {

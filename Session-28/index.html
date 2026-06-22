@@ -54,9 +54,9 @@
         document.body.append(renderProfile(data))
 
         document.querySelector('button').addEventListener('click', () => {
-            window.location.href = './login/index.html'
             localStorage.removeItem('accessToken')
             localStorage.removeItem('refreshToken')
+            window.location.href = './login/index.html'
         })
     }
     init();
