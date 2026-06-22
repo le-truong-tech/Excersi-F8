@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
+    <style>
+        * {
+            padding: 0;
+            border: 0;
+            box-sizing: border-box;
+            font-size: 62.5%;
+            font-size: 1.6rem;
+        }
+
+        .header {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+        }
+
+        .userRole {
+            align-self: center;
+            display: inline;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            color: #fff;
+            background-color: #2563eb;
+            border-radius: 0.4rem;
+        }
+
+        button {
+            color: white;
+            background-color: red;
+            padding: 0.4rem;
+            margin: 0.8rem;
+            border-radius: 0.4rem;
+        }
+    </style>
+</head>
+<body>
+</div>
+<script type="module">
+    import {getUser} from "./ultils/login/login.js";
+    import {renderProfile} from "./ultils/profile/profile.js";
+
+    const init = async () => {
+        const data = await getUser()
+        document.body.append(renderProfile(data))
+
+        document.querySelector('button').addEventListener('click', () => {
+            window.location.href = './login/index.html'
+            localStorage.removeItem('accessToken')
+            localStorage.removeItem('refreshToken')
+        })
+    }
+    init();
+</script>
+</body>
+
+</html>
