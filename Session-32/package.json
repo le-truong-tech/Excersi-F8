@@ -1,0 +1,21 @@
+{
+  "name": "session-32",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc --noEmit && tsx main.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Le Truong",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "tsx": "^4.23.0",
+    "typescript": "^7.0.2"
+  },
+  "dependencies": {
+    "uuid": "^14.0.1"
+  }
+}
