@@ -10,7 +10,7 @@ export class Employee implements EmployeeI {
     name: string;
 
     constructor(name: string) {
-        this.id = v7.toString();
+        this.id = v7().toString();
         this.name = name;
     };
 
