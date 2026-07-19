@@ -1,14 +1,14 @@
 {
-  "name": "testtypescript_truongthanhle_k19",
+  "name": "exam_ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "retake exam",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev" : "tsc --noEmit && tsx index.ts",
+    "dev": "tsc --noEmit && tsx main.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Truong Thanh Le",
+  "author": "LeTruong",
   "license": "ISC",
   "devDependencies": {
     "@types/node": "^26.1.1",

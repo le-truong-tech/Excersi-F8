@@ -1,27 +1,33 @@
-import { Employee } from "../models/Employee.js";
 import { v7 } from "uuid";
+import type { EmployeeI} from "../models/Employee";
+import { Employee } from "../models/Employee";
 
-export class EmployeeService {
+export interface EmployeeServiceI {
+    create(employee: Omit<Employee, "id">): EmployeeI;
+    findById(id: string): EmployeeI | null;
+    updateById(id: string, data: Partial<EmployeeI>): EmployeeI | null;
+}
 
-    private employees: Employee[] = [];
+export class EmployeeService implements EmployeeServiceI {
+    private employees: EmployeeI[] = [];
     
-    create(employee: Omit<Employee, "id" | "receiveNoti">): Employee {
-        const newEmployee = new Employee(employee.name);
+    create(employee: Omit<EmployeeI, "id" | "receiveNoti">): EmployeeI {
+        const newEmployee: EmployeeI = new Employee(employee.name);
         this.employees.push(newEmployee);
-
         return newEmployee;
     }
-
-    findById(id: string): Employee | null {
-        return this.employees.find(e => e.id === id) || null;
+    findById(id: string): EmployeeI | null {
+        const employee = this.employees.find(e => e.id === id);
+        if(!employee)return null;
+        return employee;
     }
-
-    updateById(id: string, data: Partial<Employee>): Employee | null {
+    updateById(id: string, data: Partial<EmployeeI>): EmployeeI | null {
         const employee = this.findById(id);
-        if (!employee) return null;
+        if(!employee) return null;
 
-        if (data.name !== undefined) employee.name = data.name;
+        if(data.name !== undefined) employee.name = data.name;
         
         return employee;
     }
+
 }

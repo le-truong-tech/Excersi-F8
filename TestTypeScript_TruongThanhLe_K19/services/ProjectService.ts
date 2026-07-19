@@ -1,45 +1,40 @@
 import { v7 } from "uuid";
-import type { Project } from "../models/Project.js";
-import type { EmployeeService } from "./EmployeeService.js";
+import type { ProjectI } from "../models/Project";
+import type { Employee } from "../models/Employee";
+import type { EmployeeService, EmployeeServiceI } from "./EmployeeService";
+export interface ProjectServiceI {
+    create(project: Omit<ProjectI, "id" | "receiveNoti">): ProjectI;
+    updateById(id: string, data: Partial<ProjectI>): ProjectI | null;
+}
 
+export class ProjectService implements ProjectServiceI {
+    private projects: ProjectI[] = [];
 
-export class ProjectService {
-    private projects: Project[] = [];
+    constructor(private employeeService: EmployeeServiceI){};
 
-    constructor(private employeeService: EmployeeService) {
-
-    }
-
-    create(data: Omit<Project, "id">) : Project {
-        const newProject = {id: v7(), ...data};
+    create(project: Omit<ProjectI, "id">): ProjectI {
+        const newProject = {...project, "id": v7()};
         this.projects.push(newProject);
 
-        const employee = this.employeeService.findById(data.employeeId)
-        if(employee) {
-            employee.receiveNoti("Bạn vừa được gán vào dự án mới.")
-        }
-
+        const employee = this.employeeService.findById(project.employeeId);
+        if(employee) employee.receiveNoti("Bạn vừa được gán vào dự án mới");
+        
         return newProject;
     }
-
-    updateById(id: string, data: Partial<Project>): Project | null {
-
-        const index = this.projects.findIndex(p => p.id === id);
-        if (index === -1) {return null;}
-
-        const oldProject = this.projects[index];
-        const newEmployeeId = data.employeeId;
-        
-        if (!oldProject) return null; 
-        this.projects[index] = {...oldProject, ...data};
-
-        if (newEmployeeId && newEmployeeId !== oldProject.employeeId) {
-            const newEmployee = this.employeeService.findById(newEmployeeId);
-            if (newEmployee) {
-                newEmployee.receiveNoti("Bạn đã được chuyển giao phụ trách dự án này.");
-            }
+    updateById(id: string, data: Partial<ProjectI>): ProjectI | null {
+        let project: ProjectI | null = this.findById(id);
+        if(!project) return null;
+        if(project.employeeId !== data.employeeId || project.customerId !== data.customerId) {      
+            const employee = this.employeeService.findById(project.employeeId);
+            if(!employee) throw new Error(`I not found employee id: ${project.employeeId}`);
+            Object.assign(project, data);
+            if(data.employeeId) employee.receiveNoti("Bạn đã được chuyển giao phụ trách dự án này.");
         }
-
-        return this.projects[index];
+        return project;
     }
+
+    findById(id: string): ProjectI | null {
+        return this.projects.find(p => p.id === id) || null;
+    }
+
 }
